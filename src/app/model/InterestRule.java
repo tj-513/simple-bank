@@ -1,14 +1,14 @@
 package app.model;
 
+import java.time.LocalDate;
+
 public class InterestRule {
     private String id;
-    private String date;
+    private LocalDate date;
     private double interestRate;
 
-    public InterestRule(String id, String date, double interestRate) {
-        this.id = id;
-        this.date = date;
-        this.interestRate = interestRate;
+    public InterestRule() {
+
     }
 
     public String getId() {
@@ -19,11 +19,11 @@ public class InterestRule {
         this.id = id;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

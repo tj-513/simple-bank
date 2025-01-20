@@ -1,6 +1,6 @@
 package app.model;
 
-import app.util.Utils;
+import app.Utils;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ public class Account {
         if (transactions.isEmpty()) {
             return 0;
         }
-        return transactions.getLast().getRunningBalance();
+        return transactions.get(transactions.size()-1).getRunningBalance();
     }
 
     public String getNewTransactionId(LocalDate date) {

@@ -3,7 +3,7 @@ package test.service;
 import app.model.InterestRule;
 import app.model.Transaction;
 import app.model.TransactionType;
-import app.service.CoreService;
+import app.CoreService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -55,7 +55,7 @@ public class CoreServiceTest {
 
     }
 
-    public void testAccountSummary() {
+    public void getAccountStatement_givenScenario() {
         resetCoreService();
 
         Transaction t0 = getTransaction(100, LocalDate.of(2025, 5, 1), TransactionType.DEPOSIT);
@@ -83,6 +83,32 @@ public class CoreServiceTest {
         }
     }
 
+    public void testAccountStatement_whenNoTransactionsForMonth() {
+        resetCoreService();
+        Transaction t0 = getTransaction(100, LocalDate.of(2025, 5, 1), TransactionType.DEPOSIT);
+        InterestRule i0 = getInterestRule(2, LocalDate.of(2025, 5, 20));
+
+        coreService.addInterestRule(i0);
+        coreService.addTransaction("1", t0);
+
+        List<Transaction> statement = coreService.getAccountStatement("1", 6, 2025);
+        assert statement.size() == 1: "Invalid statement size";
+        assert  "0.16".equals(String.format("%.2f", statement.get(0).getTransactionAmount())): "Invalid interest calculated";
+    }
+
+    public void testAccountStatement_whenFirstTransactionInMiddleOfMonth() {
+        resetCoreService();
+        Transaction t0 = getTransaction(1000, LocalDate.of(2025, 5, 15), TransactionType.DEPOSIT);
+        InterestRule i0 = getInterestRule(2, LocalDate.of(2025, 5, 20));
+
+        coreService.addInterestRule(i0);
+        coreService.addTransaction("1", t0);
+
+        List<Transaction> statement = coreService.getAccountStatement("1", 5, 2025);
+        assert statement.size() == 2: "Invalid statement size";
+        assert  "0.66".equals(String.format("%.2f", statement.get(1).getTransactionAmount())): "Invalid interest calculated";
+    }
+
     private static Transaction getTransaction(double amount, LocalDate date, TransactionType type) {
         Transaction t3 = new Transaction();
         t3.setTransactionAmount(amount);
@@ -100,10 +126,15 @@ public class CoreServiceTest {
 
 
     public void runTests() {
+        System.out.println("Running CoreService tests");
+
         testAddTransactionWhenInitialIsWithdraw();
         testAddTransactions();
         testAddInterestRule();
-        testAccountSummary();
+        getAccountStatement_givenScenario();
+        testAccountStatement_whenNoTransactionsForMonth();
+        testAccountStatement_whenFirstTransactionInMiddleOfMonth();
+
         System.out.println("CoreService tests passed");
     }
 }

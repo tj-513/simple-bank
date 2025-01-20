@@ -1,6 +1,6 @@
 package app.model;
 
-import app.util.Utils;
+import app.Utils;
 
 import java.time.LocalDate;
 
@@ -14,7 +14,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "%s\t|%s\t|%s\t|%.2f".formatted(Utils.getFormattedDate(transactionDate), id, transactionType, transactionAmount);
+        return "%s\t|%s\t|%s\t|%.2f".formatted(Utils.getFormattedDate(transactionDate), id == null ? "": id, transactionType, transactionAmount);
     }
 
     public String getId() {

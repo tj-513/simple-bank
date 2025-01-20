@@ -1,5 +1,7 @@
 package app.model;
 
+import app.Utils;
+
 import java.time.LocalDate;
 
 public class InterestRule {
@@ -9,6 +11,10 @@ public class InterestRule {
 
     public InterestRule() {
 
+    }
+
+    public String toString() {
+        return String.format("| %s\t| %s\t\t| %.2f\t\t|", Utils.getFormattedDate(date), id, interestRate);
     }
 
     public String getId() {

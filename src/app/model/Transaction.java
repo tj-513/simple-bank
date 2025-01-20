@@ -14,7 +14,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "%s\t|%s\t|%s\t|%.2f".formatted(Utils.getFormattedDate(transactionDate), id == null ? "": id, transactionType, transactionAmount);
+        return "| %s\t| %s\t| %s\t\t| %.2f\t|".formatted(Utils.getFormattedDate(transactionDate), id == null ? "": id, transactionType.getCode(), transactionAmount);
     }
 
     public String getId() {

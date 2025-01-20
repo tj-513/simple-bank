@@ -39,6 +39,15 @@ public class CoreService {
      * Add interest rule to the bank
      */
     public List<InterestRule> addInterestRule(InterestRule interestRule) {
+        Iterator<InterestRule> iterator = bank.getInterestRules().iterator();
+        while (iterator.hasNext()) {
+            InterestRule existingRule = iterator.next();
+            if (existingRule.getDate().isEqual(interestRule.getDate())) {
+                iterator.remove();
+                break;
+            }
+        }
+
         bank.getInterestRules().add(interestRule);
         bank.getInterestRules().sort(Comparator.comparing(InterestRule::getDate));
         return bank.getInterestRules();

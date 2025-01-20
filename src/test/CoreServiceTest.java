@@ -1,4 +1,4 @@
-package test.service;
+package test;
 
 import app.model.InterestRule;
 import app.model.Transaction;

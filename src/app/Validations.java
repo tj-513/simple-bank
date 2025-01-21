@@ -4,13 +4,15 @@ import java.util.regex.Pattern;
 
 public class Validations {
     private static final Pattern DATE_PATTERN = Pattern.compile("\\d{4}\\d{2}\\d{2}");
+    private static final Pattern YYYYMM_PATTERN = Pattern.compile("\\d{4}\\d{2}");
+
 
     public static void validateTransactionTokens(String[] tokens) {
         if (tokens.length != 4) {
             throw new IllegalArgumentException("Invalid transaction format");
         }
 
-        if (isValidDate(tokens[0])) {
+        if (isInvalidDate(tokens[0])) {
             throw new IllegalArgumentException("Invalid transaction date");
         }
 
@@ -36,7 +38,7 @@ public class Validations {
             throw new IllegalArgumentException("Invalid interest rule format");
         }
 
-        if (isValidDate(tokens[0])) {
+        if (isInvalidDate(tokens[0])) {
             throw new IllegalArgumentException("Invalid interest rule date");
         }
 
@@ -50,10 +52,29 @@ public class Validations {
         }
     }
 
-    public static boolean isValidDate(String date) {
+    public static void validatePrintStatementTokens(String[] tokens) {
+        if (tokens.length != 2) {
+            throw new IllegalArgumentException("Invalid print statement format");
+        }
+        if (tokens[0] == null || tokens[0].isEmpty()) {
+            throw new IllegalArgumentException("Invalid account id");
+        }
+        if (isInvalidYearMonth(tokens[1])) {
+            throw new IllegalArgumentException("Invalid print statement year/month");
+        }
+    }
+
+    public static boolean isInvalidDate(String date) {
         if (date == null) {
             return true;
         }
         return !DATE_PATTERN.matcher(date).matches();
+    }
+
+    public static boolean isInvalidYearMonth(String yearMonth) {
+        if (yearMonth == null) {
+            return true;
+        }
+        return !YYYYMM_PATTERN.matcher(yearMonth).matches();
     }
 }

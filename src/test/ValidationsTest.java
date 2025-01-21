@@ -4,25 +4,7 @@ import app.Validations;
 
 public class ValidationsTest {
 
-    public static void main(String[] args) {
-        testValidInterestRuleTokens();
-        testInvalidInterestRuleFormat();
-        testInvalidInterestRuleDate();
-        testInvalidInterestRate();
-        testInvalidInterestRateFormat();
-        System.out.println("All tests passed.");
-
-        testValidTransactionTokens();
-        testInvalidTransactionFormat();
-        testInvalidTransactionDate();
-        testInvalidAccountId();
-        testInvalidTransactionType();
-        testInvalidTransactionAmount();
-        testNegativeTransactionAmount();
-        System.out.println("All tests passed.");
-    }
-
-    public static void testValidInterestRuleTokens() {
+    public void testValidInterestRuleTokens() {
         String[] validTokens = {"20230101", "RULE01", "1.95"};
         try {
             Validations.validateInterestRuleTokens(validTokens);
@@ -31,7 +13,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidInterestRuleFormat() {
+    public void testInvalidInterestRuleFormat() {
         String[] invalidTokens = {"20230101", "RULE01"};
         try {
             Validations.validateInterestRuleTokens(invalidTokens);
@@ -41,7 +23,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidInterestRuleDate() {
+    public void testInvalidInterestRuleDate() {
         String[] invalidDateTokens = {"202301", "RULE01", "1.95"};
         try {
             Validations.validateInterestRuleTokens(invalidDateTokens);
@@ -51,7 +33,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidInterestRate() {
+    public void testInvalidInterestRate() {
         String[] invalidRateTokens = {"20230101", "RULE01", "101"};
         try {
             Validations.validateInterestRuleTokens(invalidRateTokens);
@@ -61,7 +43,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidInterestRateFormat() {
+    public void testInvalidInterestRateFormat() {
         String[] invalidRateFormatTokens = {"20230101", "RULE01", "rate"};
         try {
             Validations.validateInterestRuleTokens(invalidRateFormatTokens);
@@ -72,7 +54,7 @@ public class ValidationsTest {
     }
 
 
-    public static void testValidTransactionTokens() {
+    public void testValidTransactionTokens() {
         String[] validTokens = {"20230101", "ACC01", "D", "100.00"};
         try {
             Validations.validateTransactionTokens(validTokens);
@@ -81,7 +63,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidTransactionFormat() {
+    public void testInvalidTransactionFormat() {
         String[] invalidTokens = {"20230101", "ACC01", "D"};
         try {
             Validations.validateTransactionTokens(invalidTokens);
@@ -91,7 +73,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidTransactionDate() {
+    public void testInvalidTransactionDate() {
         String[] invalidDateTokens = {"202301", "ACC01", "D", "100.00"};
         try {
             Validations.validateTransactionTokens(invalidDateTokens);
@@ -101,7 +83,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidAccountId() {
+    public void testInvalidAccountId() {
         String[] invalidAccountIdTokens = {"20230101", "", "D", "100.00"};
         try {
             Validations.validateTransactionTokens(invalidAccountIdTokens);
@@ -111,7 +93,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidTransactionType() {
+    public void testInvalidTransactionType() {
         String[] invalidTypeTokens = {"20230101", "ACC01", "X", "100.00"};
         try {
             Validations.validateTransactionTokens(invalidTypeTokens);
@@ -121,7 +103,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testInvalidTransactionAmount() {
+    public void testInvalidTransactionAmount() {
         String[] invalidAmountTokens = {"20230101", "ACC01", "D", "amount"};
         try {
             Validations.validateTransactionTokens(invalidAmountTokens);
@@ -131,7 +113,7 @@ public class ValidationsTest {
         }
     }
 
-    public static void testNegativeTransactionAmount() {
+    public void testNegativeTransactionAmount() {
         String[] negativeAmountTokens = {"20230101", "ACC01", "D", "-100.00"};
         try {
             Validations.validateTransactionTokens(negativeAmountTokens);
@@ -139,5 +121,73 @@ public class ValidationsTest {
         } catch (IllegalArgumentException e) {
             assert e.getMessage().equals("Invalid transaction amount") : "Expected 'Invalid transaction amount' message";
         }
+    }
+
+    public static void testValidPrintStatementTokens() {
+        String[] validTokens = {"ACC01", "202301"};
+        try {
+            Validations.validatePrintStatementTokens(validTokens);
+        } catch (IllegalArgumentException e) {
+            assert false : "Valid tokens should not throw an exception";
+        }
+    }
+
+    public static void testInvalidPrintStatementFormat() {
+        String[] invalidTokens = {"ACC01"};
+        try {
+            Validations.validatePrintStatementTokens(invalidTokens);
+            assert false : "Invalid format should throw an exception";
+        } catch (IllegalArgumentException e) {
+            assert e.getMessage().equals("Invalid print statement format") : "Expected 'Invalid print statement format' message";
+        }
+    }
+
+    public static void testInvalidPrintStatementAccountId() {
+        String[] invalidAccountIdTokens = {"", "202301"};
+        try {
+            Validations.validatePrintStatementTokens(invalidAccountIdTokens);
+            assert false : "Invalid account id should throw an exception";
+        } catch (IllegalArgumentException e) {
+            assert e.getMessage().equals("Invalid account id") : "Expected 'Invalid account id' message";
+        }
+    }
+
+    public static void testInvalidPrintStatementYearMonth() {
+        String[] invalidYearMonthTokens = {"ACC01", "2023"};
+        try {
+            Validations.validatePrintStatementTokens(invalidYearMonthTokens);
+            assert false : "Invalid year/month should throw an exception";
+        } catch (IllegalArgumentException e) {
+            assert e.getMessage().equals("Invalid print statement year/month") : "Expected 'Invalid print statement year/month' message";
+        }
+    }
+
+    public void runAllTests() {
+        System.out.println("Running validation tests...");
+        testValidInterestRuleTokens();
+        testInvalidInterestRuleFormat();
+        testInvalidInterestRuleDate();
+        testInvalidInterestRate();
+        testInvalidInterestRateFormat();
+
+        testValidTransactionTokens();
+        testInvalidTransactionFormat();
+        testInvalidTransactionDate();
+        testInvalidAccountId();
+        testInvalidTransactionType();
+        testInvalidTransactionAmount();
+        testNegativeTransactionAmount();
+
+        testValidPrintStatementTokens();
+        testInvalidPrintStatementFormat();
+        testInvalidPrintStatementAccountId();
+        testInvalidPrintStatementYearMonth();
+
+        System.out.println("All tests passed.");
+    }
+
+    public static void main(String[] args) {
+        ValidationsTest test = new ValidationsTest();
+        test.runAllTests();
     }
 }

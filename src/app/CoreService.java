@@ -87,6 +87,10 @@ public class CoreService {
      * Get a list of applicable transactions for the given time period
      */
     private List<Transaction> getApplicableTransactions(String accountId, LocalDate startDate, LocalDate endDate) {
+        if(!bank.getAccounts().containsKey(accountId)) {
+            throw new IllegalArgumentException("Account not found");
+        }
+
         List<Transaction> transactions = bank.getAccounts().get(accountId).getTransactions();
         LinkedList<Transaction> applicableTransactions = new LinkedList<>();
 

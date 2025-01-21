@@ -98,13 +98,34 @@ public class InputProcessor {
             for (InterestRule rule : interestRules) {
                 System.out.println(rule);
             }
-            System.out.println("Is there anything else you'd like to do?");
+            System.out.println("\nIs there anything else you'd like to do?");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void processPrintStatement() {
+        System.out.println("Please enter account and month to generate the statement <Account> <Year><Month>");
+        System.out.println("(or enter blank to go back to main menu):");
+        System.out.print(">");
+        String input = inputScanner.nextLine();
+        String [] printStatementDetails = input.split(" ");
+        if (input.isEmpty()) {
+            return;
+        }
+        try {
+            Validations.validatePrintStatementTokens(printStatementDetails);
+            List<Transaction> transactions = service.getAccountStatement(printStatementDetails[0], Integer.parseInt(printStatementDetails[1].substring(4)), Integer.parseInt(printStatementDetails[1].substring(0, 4)));
+            System.out.println("Account: " + printStatementDetails[0]);
+            System.out.println("| Date\t\t| Txn Id\t\t| Type\t| Amount\t| Balance\t|");
+            for (Transaction transaction : transactions) {
+                System.out.print(transaction);
+                System.out.printf("\t%.2f|", transaction.getRunningBalance());
+            }
+            System.out.println("\nIs there anything else you'd like to do?");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private Transaction parseTransaction(String[] tokens) {

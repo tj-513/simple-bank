@@ -126,7 +126,7 @@ public class CoreServiceTest {
 
 
     public void runTests() {
-        System.out.println("Running CoreService tests");
+        System.out.println("Running CoreService tests...");
 
         testAddTransactionWhenInitialIsWithdraw();
         testAddTransactions();

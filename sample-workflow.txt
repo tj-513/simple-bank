@@ -1,0 +1,130 @@
+Welcome to AwesomeGIC Bank! What would you like to do?
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>t
+Please enter transaction details in <Date> <Account> <Type> <Amount> format
+(or enter blank to go back to main menu):
+>20230505 AC001 D 100.00
+Account: AC001
+| Date       | Txn Id      | Type  |     Amount |
+| 20230505   | 20230505-01 | D     |     100.00 |
+
+Is there anything else you'd like to do?
+
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>t
+Please enter transaction details in <Date> <Account> <Type> <Amount> format
+(or enter blank to go back to main menu):
+>20230601 AC001 D 150.00
+Account: AC001
+| Date       | Txn Id      | Type  |     Amount |
+| 20230505   | 20230505-01 | D     |     100.00 |
+| 20230601   | 20230601-01 | D     |     150.00 |
+
+Is there anything else you'd like to do?
+
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>t
+Please enter transaction details in <Date> <Account> <Type> <Amount> format
+(or enter blank to go back to main menu):
+>20230626 AC001 W 20.00
+Account: AC001
+| Date       | Txn Id      | Type  |     Amount |
+| 20230505   | 20230505-01 | D     |     100.00 |
+| 20230601   | 20230601-01 | D     |     150.00 |
+| 20230626   | 20230626-01 | W     |      20.00 |
+
+Is there anything else you'd like to do?
+
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>t
+Please enter transaction details in <Date> <Account> <Type> <Amount> format
+(or enter blank to go back to main menu):
+>20230626 AC001 W 100.00
+Account: AC001
+| Date       | Txn Id      | Type  |     Amount |
+| 20230505   | 20230505-01 | D     |     100.00 |
+| 20230601   | 20230601-01 | D     |     150.00 |
+| 20230626   | 20230626-01 | W     |      20.00 |
+| 20230626   | 20230626-02 | W     |     100.00 |
+
+Is there anything else you'd like to do?
+
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>i
+Please enter interest rule details in <Date> <RuleId> <Rate in %> format
+(or enter blank to go back to main menu):
+>20230101 RULE01 1.95
+Account: RULE01
+| Date       | Rule Id    |   Rate (%) |
+| 20230101   | RULE01     |       1.95 |
+
+Is there anything else you'd like to do?
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>i
+Please enter interest rule details in <Date> <RuleId> <Rate in %> format
+(or enter blank to go back to main menu):
+>20230520 RULE02 1.90
+Account: RULE02
+| Date       | Rule Id    |   Rate (%) |
+| 20230101   | RULE01     |       1.95 |
+| 20230520   | RULE02     |       1.90 |
+
+Is there anything else you'd like to do?
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>i
+Please enter interest rule details in <Date> <RuleId> <Rate in %> format
+(or enter blank to go back to main menu):
+>20230615 RULE03 2.20
+Account: RULE03
+| Date       | Rule Id    |   Rate (%) |
+| 20230101   | RULE01     |       1.95 |
+| 20230520   | RULE02     |       1.90 |
+| 20230615   | RULE03     |       2.20 |
+
+Is there anything else you'd like to do?
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>p
+Please enter account and month to generate the statement <Account> <Year><Month>
+(or enter blank to go back to main menu):
+>AC001 202306
+Account: AC001
+| Date       | Txn Id      | Type  |     Amount |    Balance |
+| 20230601   | 20230601-01 | D     |     150.00 |     250.00 |
+| 20230626   | 20230626-01 | W     |      20.00 |     230.00 |
+| 20230626   | 20230626-02 | W     |     100.00 |     130.00 |
+| 20230630   |            | I     |       0.39 |     130.39 |
+
+Is there anything else you'd like to do?
+[T] Input transactions
+[I] Define interest rules
+[P] Print statement
+[Q] Quit
+>q
+Thank you for using AwesomeGIC Bank!
+Have a nice day!
+
+Process finished with exit code 0

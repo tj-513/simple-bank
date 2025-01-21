@@ -14,7 +14,11 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "| %s\t| %s\t| %s\t\t| %.2f\t|".formatted(Utils.getFormattedDate(transactionDate), id == null ? "": id, transactionType.getCode(), transactionAmount);
+        return String.format("| %-10s | %-10s | %-5s | %10.2f |",
+                Utils.getFormattedDate(transactionDate),
+                id == null ? " ": id,
+                transactionType.getCode(),
+                transactionAmount);
     }
 
     public String getId() {

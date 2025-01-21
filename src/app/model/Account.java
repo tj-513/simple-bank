@@ -25,7 +25,7 @@ public class Account {
         int transactionsForDate = (int) transactions.stream()
                 .filter(t -> t.getTransactionDate().equals(date))
                 .count();
-        return "%s-%02d".formatted(Utils.getFormattedDate(date), transactionsForDate + 1);
+        return String.format("%s-%02d",Utils.getFormattedDate(date), transactionsForDate + 1);
     }
 
     public List<Transaction> getTransactions() {

@@ -29,3 +29,6 @@ To run the tests, use the following command:
 ```sh
 java -cp out test/TestRunner
 ``` 
+
+## Sample Output
+For a sample output of the program, refer to the [sample-workflow.txt](sample-workflow.txt) file.

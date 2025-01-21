@@ -14,7 +14,10 @@ public class InterestRule {
     }
 
     public String toString() {
-        return String.format("| %s\t| %s\t\t| %.2f\t\t|", Utils.getFormattedDate(date), id, interestRate);
+        return String.format("| %-10s | %-10s | %10.2f |",
+                Utils.getFormattedDate(date),
+                id,
+                interestRate);
     }
 
     public String getId() {

@@ -6,6 +6,7 @@ import app.model.TransactionType;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 public class InputProcessor {
     private final CoreService service = new CoreService();
@@ -33,15 +34,15 @@ public class InputProcessor {
         switch (option) {
             case "T":
             case "t":
-                processTransaction();
+                loopUntilTrue(this::processTransaction);
                 break;
             case "I":
             case "i":
-                processInterestRule();
+                loopUntilTrue(this::processInterestRule);
                 break;
             case "P":
             case "p":
-                processPrintStatement();
+                loopUntilTrue(this::processPrintStatement);
                 break;
             case "Q":
             case "q":
@@ -54,13 +55,19 @@ public class InputProcessor {
         }
     }
 
-    private void processTransaction() {
+    private void loopUntilTrue(Supplier<Boolean> supplier) {
+        while (!supplier.get()) {
+            // loop until supplier returns true
+        }
+    }
+
+    private boolean processTransaction() {
         System.out.println("Please enter transaction details in <Date> <Account> <Type> <Amount> format");
         System.out.println("(or enter blank to go back to main menu):");
         System.out.print(">");
         String input = inputScanner.nextLine();
-        if (input.isEmpty()) {
-            return;
+        if (input.isBlank()) {
+            return true;
         }
         String[] transactionDetails = input.split(" ");
         try {
@@ -70,61 +77,67 @@ public class InputProcessor {
                             transactionDetails[1], parseTransaction(transactionDetails)
                     );
             System.out.println("Account: " + transactionDetails[1]);
-            System.out.println("| Date\t\t| Txn Id\t\t| Type\t| Amount\t|");
+            System.out.printf("| %-10s | %-10s  | %-5s | %10s |\n", "Date", "Txn Id", "Type", "Amount");
             for (Transaction transaction : transactions) {
                 System.out.println(transaction);
             }
             System.out.println("\nIs there anything else you'd like to do?\n");
-
+            return true;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
-    private void processInterestRule() {
+    private boolean processInterestRule() {
         System.out.println("Please enter interest rule details in <Date> <RuleId> <Rate in %> format");
         System.out.println("(or enter blank to go back to main menu):");
         System.out.print(">");
         String input = inputScanner.nextLine();
         String [] interestRuleDetails = input.split(" ");
-        if (input.isEmpty()) {
-            return;
+        if (input.isBlank()) {
+            return true;
         }
         try {
             Validations.validateInterestRuleTokens(interestRuleDetails);
             List<InterestRule> interestRules = service.addInterestRule(parseInterestRule(interestRuleDetails));
             System.out.println("Account: " + interestRuleDetails[1]);
-            System.out.println("| Date\t\t| Rule Id\t|Rate (%)\t|");
+            System.out.printf("| %-10s | %-10s | %10s |\n", "Date", "Rule Id", "Rate (%)");
             for (InterestRule rule : interestRules) {
                 System.out.println(rule);
             }
             System.out.println("\nIs there anything else you'd like to do?");
+            return true;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
-    private void processPrintStatement() {
+    private boolean processPrintStatement() {
         System.out.println("Please enter account and month to generate the statement <Account> <Year><Month>");
         System.out.println("(or enter blank to go back to main menu):");
         System.out.print(">");
         String input = inputScanner.nextLine();
         String [] printStatementDetails = input.split(" ");
-        if (input.isEmpty()) {
-            return;
+        if (input.isBlank()) {
+            return true;
         }
         try {
             Validations.validatePrintStatementTokens(printStatementDetails);
             List<Transaction> transactions = service.getAccountStatement(printStatementDetails[0], Integer.parseInt(printStatementDetails[1].substring(4)), Integer.parseInt(printStatementDetails[1].substring(0, 4)));
             System.out.println("Account: " + printStatementDetails[0]);
-            System.out.println("| Date\t\t| Txn Id\t\t| Type\t| Amount\t| Balance\t|");
+            System.out.printf("| %-10s | %-10s  | %-5s | %10s | %10s |\n", "Date", "Txn Id", "Type", "Amount", "Balance");
+
             for (Transaction transaction : transactions) {
                 System.out.print(transaction);
-                System.out.printf("\t%.2f|", transaction.getRunningBalance());
+                System.out.printf(" %10.2f |\n", transaction.getRunningBalance());
             }
             System.out.println("\nIs there anything else you'd like to do?");
+            return true;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
